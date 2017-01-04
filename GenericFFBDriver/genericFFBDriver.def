@@ -1,0 +1,11 @@
+;myServ.def : Declares the module parameters for the DLL.
+
+LIBRARY      myServ
+DESCRIPTION  'My First total C++ COM Object'
+
+EXPORTS
+	DllRegisterServer	PRIVATE ; COM server registration
+	DllUnregisterServer	PRIVATE ; COM server deregistration
+    DllCanUnloadNow		PRIVATE 
+    DllGetClassObject	PRIVATE 
+

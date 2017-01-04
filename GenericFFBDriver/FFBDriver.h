@@ -1,0 +1,36 @@
+#pragma once
+
+#include "initguid.h"
+#include "stdafx.h"
+
+#include "Registrar.h"
+#include "ComBase.h"
+
+// {0AB5665A-4549-4FD0-A952-5A2B9699BDA8}
+_declspec(selectany) GUID CLSID_FFBDriver = 
+	{ 0xab5665a, 0x4549, 0x4fd0,{ 0xa9, 0x52, 0x5a, 0x2b, 0x96, 0x99, 0xbd, 0xa8 } };
+
+//IID_IDirectInputEffectDriver
+
+class FFBDriver
+	: public CComBase<>, public InterfaceImpl<IDirectInputEffectDriver>
+{
+public:
+	FFBDriver();
+	~FFBDriver();
+
+	STDMETHODIMP FFBDriver::QueryInterface(REFIID riid, LPVOID *ppv);
+
+	HRESULT STDMETHODCALLTYPE DeviceID(DWORD, DWORD, DWORD, DWORD, LPVOID);
+	HRESULT STDMETHODCALLTYPE GetVersions(LPDIDRIVERVERSIONS);
+	HRESULT STDMETHODCALLTYPE Escape(DWORD, DWORD, LPDIEFFESCAPE);
+	HRESULT STDMETHODCALLTYPE SetGain(DWORD, DWORD);
+	HRESULT STDMETHODCALLTYPE SendForceFeedbackCommand(DWORD, DWORD);
+	HRESULT STDMETHODCALLTYPE GetForceFeedbackState(DWORD, LPDIDEVICESTATE);
+	HRESULT STDMETHODCALLTYPE DownloadEffect(DWORD, DWORD, LPDWORD, LPCDIEFFECT, DWORD);
+	HRESULT STDMETHODCALLTYPE DestroyEffect(DWORD, DWORD);
+	HRESULT STDMETHODCALLTYPE StartEffect(DWORD, DWORD, DWORD, DWORD);
+	HRESULT STDMETHODCALLTYPE StopEffect(DWORD, DWORD);
+	HRESULT STDMETHODCALLTYPE GetEffectStatus(DWORD, DWORD, LPDWORD);
+};
+
