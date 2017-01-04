@@ -27,6 +27,20 @@ protected:
 		RegCloseKey(hKeyResult);
 		return (retVal == ERROR_SUCCESS) ? TRUE:FALSE;
 	}
+	BOOL SetInRegistry(HKEY hRootKey, LPCSTR subKey, LPCSTR keyName, LPVOID keyValue, DWORD keyValueLen)
+	{
+		HKEY hKeyResult;
+		DWORD dataLength;
+		DWORD dwDisposition;
+		if (RegCreateKeyExA(hRootKey, subKey, 0, NULL, REG_OPTION_NON_VOLATILE,
+			KEY_WRITE, NULL, &hKeyResult, &dwDisposition) != ERROR_SUCCESS)
+		{
+			return FALSE;
+		}
+		DWORD retVal = RegSetValueExA(hKeyResult, keyName, 0, REG_BINARY, (const BYTE *)keyValue, keyValueLen);
+		RegCloseKey(hKeyResult);
+		return (retVal == ERROR_SUCCESS) ? TRUE : FALSE;
+	}
 
 	BOOL DelFromRegistry(HKEY hRootKey, LPCSTR subKey)
 	{
@@ -121,7 +135,78 @@ public:
 		if(! SetInRegistry(HKEY_CLASSES_ROOT,Buffer,"",Path))
 			return false;
 
-		return SetInRegistry(HKEY_CLASSES_ROOT, Buffer, "ThreadingModel", "Both") ? true : false;
+		if(! SetInRegistry(HKEY_CLASSES_ROOT, Buffer, "ThreadingModel", "Both"))
+			return false;
+
+		// Creating DirectInput keys
+		const char* oemPath = "SYSTEM\\CurrentControlSet\\Control\\MediaProperties\\PrivateProperties\\Joystick\\OEM\\VID_0079&PID_0006\\OEMForceFeedback";
+		
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, oemPath, "CLSID", "{0AB5665A-4549-4FD0-A952-5A2B9699BDA8}"))
+			return false;
+
+		const byte attrVal[] = { 
+			0x00, 0x00, 0x00, 0x00,
+			0xe8, 0x03, 0x00, 0x00,
+			0xe8, 0x03, 0x00, 0x00
+		};
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, oemPath, "Attributes", (LPVOID)attrVal, 12))
+			return false;
+		
+		char pathBuff[256];
+
+		// Registering Axe attributes
+		const char* axePath = "SYSTEM\\CurrentControlSet\\Control\\MediaProperties\\PrivateProperties\\Joystick\\OEM\\VID_0079&PID_0006\\Axes";
+		byte axeAttrData[] = {
+			0x01, 0x81, 0x00, 0x00, 0x01, 0x00, 0x30, 0x00
+		};
+		const byte axeFFAttrData[] = {
+			0x0a, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00
+		};
+
+		sprintf(pathBuff, "%s\\%d", axePath, 0);
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "Attributes", (LPVOID)axeAttrData, 8))
+			return false;
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "FFAttributes", (LPVOID)axeFFAttrData, 8))
+			return false;
+
+		sprintf(pathBuff, "%s\\%d", axePath, 1);
+		axeAttrData[6] = 0x31;
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "Attributes", (LPVOID)axeAttrData, 8))
+			return false;
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "FFAttributes", (LPVOID)axeFFAttrData, 8))
+			return false;
+
+
+		// Registering effects
+		sprintf(pathBuff, "%s\\Effects", oemPath);
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "", ""))
+			return false;
+
+		// Constant force
+		sprintf(pathBuff, "%s\\Effects\\%s", oemPath, "{13541C20-8E33-11D0-9AD0-00A0C9A06E35}");
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "", "Constant"))
+			return false;
+		const byte attrConstForceVal[] = {
+			0x00, 0x00, 0x00, 0x00, 0x01, 0x86, 0x00, 0x00,
+			0xed, 0x03, 0x00, 0x00, 0xed, 0x03, 0x00, 0x00,
+			0x30, 0x00, 0x00, 0x00
+		};
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "Attributes", (LPVOID)attrConstForceVal, 20))
+			return false;
+
+		// Sine wave force
+		sprintf(pathBuff, "%s\\Effects\\%s", oemPath, "{13541C23-8E33-11D0-9AD0-00A0C9A06E35}");
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "", "Sine Wave"))
+			return false;
+		const byte attrSineForceVal[] = {
+			0x03, 0x00, 0x00, 0x00, 0x03, 0x86, 0x00, 0x00,
+			0xef, 0x03, 0x00, 0x00, 0xef, 0x03, 0x00, 0x00,
+			0x30, 0x00, 0x00, 0x00
+		};
+		if (!SetInRegistry(HKEY_LOCAL_MACHINE, pathBuff, "Attributes", (LPVOID)attrSineForceVal, 20))
+			return false;
+
+		return true;
 	}
 
 	bool UnRegisterObject(REFIID riid,LPCSTR LibId,LPCSTR ClassId)
