@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericFFBDriver", "GenericFFBDriver\GenericFFBDriver.vcxproj", "{D6C39223-E1E8-4679-908C-BACACEA1E6CA}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DriverInstaller-x86", "DriverInstaller\DriverInstaller.vdproj", "{C408790E-C9A8-4E4E-866F-F29991472631}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DriverInstaller-x64", "DriverInstaller-x64\DriverInstaller-x64.vdproj", "{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		ReleaseSetup|Any CPU = ReleaseSetup|Any CPU
+		ReleaseSetup|x64 = ReleaseSetup|x64
+		ReleaseSetup|x86 = ReleaseSetup|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.Debug|Any CPU.ActiveCfg = Debug|Win32
@@ -25,6 +32,31 @@ Global
 		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.Release|x64.Build.0 = Release|x64
 		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.Release|x86.ActiveCfg = Release|Win32
 		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.Release|x86.Build.0 = Release|Win32
+		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.ReleaseSetup|Any CPU.ActiveCfg = Release|Win32
+		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.ReleaseSetup|x64.ActiveCfg = Release|x64
+		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.ReleaseSetup|x64.Build.0 = Release|x64
+		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.ReleaseSetup|x86.ActiveCfg = Release|Win32
+		{D6C39223-E1E8-4679-908C-BACACEA1E6CA}.ReleaseSetup|x86.Build.0 = Release|Win32
+		{C408790E-C9A8-4E4E-866F-F29991472631}.Debug|Any CPU.ActiveCfg = Debug
+		{C408790E-C9A8-4E4E-866F-F29991472631}.Debug|x64.ActiveCfg = Debug
+		{C408790E-C9A8-4E4E-866F-F29991472631}.Debug|x86.ActiveCfg = Debug
+		{C408790E-C9A8-4E4E-866F-F29991472631}.Release|Any CPU.ActiveCfg = Release
+		{C408790E-C9A8-4E4E-866F-F29991472631}.Release|x64.ActiveCfg = Release
+		{C408790E-C9A8-4E4E-866F-F29991472631}.Release|x86.ActiveCfg = Release
+		{C408790E-C9A8-4E4E-866F-F29991472631}.ReleaseSetup|Any CPU.ActiveCfg = Release
+		{C408790E-C9A8-4E4E-866F-F29991472631}.ReleaseSetup|x64.ActiveCfg = Release
+		{C408790E-C9A8-4E4E-866F-F29991472631}.ReleaseSetup|x64.Build.0 = Release
+		{C408790E-C9A8-4E4E-866F-F29991472631}.ReleaseSetup|x86.ActiveCfg = Release
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Debug|Any CPU.ActiveCfg = Debug
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Debug|x64.ActiveCfg = Debug
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Debug|x86.ActiveCfg = Debug
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Release|Any CPU.ActiveCfg = Release
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Release|x64.ActiveCfg = Release
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Release|x86.ActiveCfg = Release
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.ReleaseSetup|Any CPU.ActiveCfg = Release
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.ReleaseSetup|x64.ActiveCfg = Release
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.ReleaseSetup|x64.Build.0 = Release
+		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.ReleaseSetup|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
