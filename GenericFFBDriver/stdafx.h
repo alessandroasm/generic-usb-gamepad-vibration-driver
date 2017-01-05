@@ -14,5 +14,6 @@
 
 
 // TODO: reference additional headers your program requires here
+#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 #include <dinputd.h>

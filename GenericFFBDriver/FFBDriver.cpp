@@ -9,7 +9,7 @@ void LogMessage(const char* msg) {
 	GetSystemTime(&st);
 	char buffer[256];
 
-	sprintf(buffer, "[ %04d-%02d-%02d %02d:%02d:%02d.%03d ] %s",
+	sprintf_s(buffer, "[ %04d-%02d-%02d %02d:%02d:%02d.%03d ] %s",
 		st.wYear, st.wMonth, st.wDay,
 		st.wHour, st.wMinute, st.wSecond,
 		st.wMilliseconds, msg);
@@ -55,7 +55,7 @@ HRESULT STDMETHODCALLTYPE FFBDriver::DeviceID(
 
 #ifdef _DEBUG
 	char buff[100];
-	sprintf(buff, "DeviceID\n\tdwDIVer=0x%04x\n\tdwExternalID=0x%04x\n\tfBegin=0x%04x\n\tdwInternalId=0x%04x\n\n", 
+	sprintf_s(buff, "DeviceID\n\tdwDIVer=0x%04x\n\tdwExternalID=0x%04x\n\tfBegin=0x%04x\n\tdwInternalId=0x%04x\n\n",
 		dwDIVer, dwExternalID, fBegin, dwInternalId);
 	LogMessage(buff);
 #endif
@@ -84,7 +84,7 @@ HRESULT STDMETHODCALLTYPE FFBDriver::SetGain(
 {
 #ifdef _DEBUG
 	char buff[100];
-	sprintf(buff, "SetGain\n\tdwID=0x%04x\n\tdwGain=0x%04x\n\n",
+	sprintf_s(buff, "SetGain\n\tdwID=0x%04x\n\tdwGain=0x%04x\n\n",
 		dwID, dwGain);
 	LogMessage(buff);
 #endif
@@ -106,7 +106,7 @@ HRESULT STDMETHODCALLTYPE FFBDriver::SendForceFeedbackCommand(
 {
 #ifdef _DEBUG
 	char buff[100];
-	sprintf(buff, "SendForceFeedbackCommand\n\tdwID=0x%04x\n\tdwCommand=0x%04x\n\n",
+	sprintf_s(buff, "SendForceFeedbackCommand\n\tdwID=0x%04x\n\tdwCommand=0x%04x\n\n",
 		dwID, dwCommand);
 	LogMessage(buff);
 #endif
@@ -144,7 +144,7 @@ HRESULT STDMETHODCALLTYPE FFBDriver::DownloadEffect(
 {
 #ifdef _DEBUG
 	char buff[100];
-	sprintf(buff, "DownloadEffect\n\tdwID=0x%04x\n\tdwEffectID=0x%04x\n\tdwFlags=0x%04x\n\n",
+	sprintf_s(buff, "DownloadEffect\n\tdwID=0x%04x\n\tdwEffectID=0x%04x\n\tdwFlags=0x%04x\n\n",
 		dwID, dwEffectID, dwFlags);
 
 	LogMessage(buff);
