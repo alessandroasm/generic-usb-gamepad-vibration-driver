@@ -7,9 +7,20 @@ namespace vibration {
 
 	class VibrationController
 	{
+		class VibrationThreadDeleter {
+		public:
+			void operator()(std::thread* t) const {
+				if (t->joinable()) {
+					VibrationController::Reset();
+				}
+				else
+					delete t;
+			}
+		};
+
 		static std::wstring hidDevPath;
 		static std::mutex mtxSync;
-		static std::unique_ptr<std::thread> thrVibration;
+		static std::unique_ptr<std::thread, VibrationThreadDeleter> thrVibration;
 
 		VibrationController();
 		~VibrationController();

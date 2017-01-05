@@ -45,7 +45,7 @@ namespace vibration {
 
 	std::wstring VibrationController::hidDevPath;
 	std::mutex VibrationController::mtxSync;
-	std::unique_ptr<std::thread> VibrationController::thrVibration;
+	std::unique_ptr<std::thread, VibrationController::VibrationThreadDeleter> VibrationController::thrVibration;
 
 	VibrationController::VibrationController()
 	{
