@@ -52,17 +52,11 @@ protected:
 
 	bool StrFromCLSID(REFIID riid,LPSTR strCLSID)
 	{
-		LPOLESTR pOleStr = NULL;
-		HRESULT hr = ::StringFromCLSID(riid,&pOleStr);
-		if(FAILED(hr))
-			return false;
-		int bytesConv = ::WideCharToMultiByte(CP_ACP,0,pOleStr,(int)wcslen(pOleStr),strCLSID,MAX_PATH,NULL,NULL);
-		CoTaskMemFree(pOleStr);
-		strCLSID [ bytesConv ] = '\0';
-		if(!bytesConv)
-		{
-			return false;
-		}
+		sprintf_s(strCLSID, MAX_PATH, "{%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX}",
+			riid.Data1, riid.Data2, riid.Data3,
+			riid.Data4[0], riid.Data4[1], riid.Data4[2], riid.Data4[3],
+			riid.Data4[4], riid.Data4[5], riid.Data4[6], riid.Data4[7]);
+		
 		return true;
 	}
 public:
