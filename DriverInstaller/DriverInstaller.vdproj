@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:DriverInstaller-x86"
+"ProjectName" = "8:DriverInstaller"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -13,6 +13,12 @@
 "SccProvider" = "8:"
     "Hierarchy"
     {
+        "Entry"
+        {
+        "MsmKey" = "8:_C378259A8D8C4FB880EAEC27ECC1720F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
         "Entry"
         {
         "MsmKey" = "8:_CACB481DB8B74D96B26F50DCA0C3F56A"
@@ -27,7 +33,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\DriverInstaller.msi"
+        "OutputFilename" = "8:..\\Release\\VibrationDriverInstaller.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -37,13 +43,21 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Release\\VibrationDriverInstaller-x86.msi"
+        "OutputFilename" = "8:..\\Release\\VibrationDriverInstaller.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -70,6 +84,20 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_A58FBA840C67404E868C9D92987CA01A"
+            {
+            "Name" = "8:GenericFFBDriver32.dll"
+            "Condition" = "8:"
+            "Object" = "8:_CACB481DB8B74D96B26F50DCA0C3F56A"
+            "FileType" = "3:1"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:RegisterVibrationDriver"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_E9FCB57E_3CD7_4256_8EE5_1BFB7014D07D"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -85,12 +113,32 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C378259A8D8C4FB880EAEC27ECC1720F"
+            {
+            "SourcePath" = "8:..\\Release\\GenericFFBDriver64.dll"
+            "TargetName" = "8:GenericFFBDriver64.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_08365EDD8FF742F7A8EA90AD36CEE015"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CACB481DB8B74D96B26F50DCA0C3F56A"
             {
             "SourcePath" = "8:..\\Release\\GenericFFBDriver32.dll"
             "TargetName" = "8:GenericFFBDriver32.dll"
             "Tag" = "8:"
-            "Folder" = "8:_70D2A39DB17244D1A08BF53BE196346B"
+            "Folder" = "8:_08365EDD8FF742F7A8EA90AD36CEE015"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -145,16 +193,31 @@
                 {
                 }
             }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_EB20EB274A8046AEA4621B3A08C74E43"
+            {
+            "Name" = "8:#1924"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:WindowsFolder"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_08365EDD8FF742F7A8EA90AD36CEE015"
+                    {
+                    "Name" = "8:GenericFFBDriver"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_C4024A52445545BFAFDC66ED44DCA719"
+                        "Folders"
+                        {
+                        }
+                    }
+                }
+            }
         }
         "LaunchCondition"
         {
-            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_CE465BB9F91247E294E9C0235D4ECCAC"
-            {
-            "Name" = "8:Machine_is_x64"
-            "Condition" = "8:!VersionNT64"
-            "Message" = "8:Please install the x64 driver"
-            "InstallUrl" = "8:"
-            }
         }
         "Locator"
         {
@@ -169,7 +232,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Generic USB Gamepad Vibration Driver"
         "ProductCode" = "8:{50CD8B4D-CD82-49D1-9E0A-2B7887448068}"
-        "PackageCode" = "8:{9637050A-F0CF-4529-95D3-3BD9C8410FAB}"
+        "PackageCode" = "8:{C6059427-7868-44F2-86B6-E029402B5181}"
         "UpgradeCode" = "8:{A08375A2-DC94-4A88-8431-ED8D9717FA62}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -177,7 +240,7 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Alessandro Menezes"
+        "Manufacturer" = "8:Generic USB Gamepad Vibration Driver"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Generic USB Gamepad Vibration Driver"
@@ -494,28 +557,6 @@
                             }
                         }
                     }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_F2DB315D6C9C45D2BEFEDAE1DE489358"
-                    {
-                    "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
                 }
             }
             "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_781D1A01A61242E48BB1652DE8A42A73"
@@ -575,41 +616,6 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D2E3044385814E558FB3996F30200A15"
-                    {
-                    "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                            "InstallAllUsersVisible"
-                            {
-                            "Name" = "8:InstallAllUsersVisible"
-                            "DisplayName" = "8:#1059"
-                            "Description" = "8:#1159"
-                            "Type" = "3:5"
-                            "ContextData" = "8:1;True=1;False=0"
-                            "Attributes" = "3:0"
-                            "Setting" = "3:0"
-                            "Value" = "3:1"
-                            "DefaultValue" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_DD51DDF859CE471FA216BD8D94DC9BF2"
                     {
                     "Sequence" = "3:300"

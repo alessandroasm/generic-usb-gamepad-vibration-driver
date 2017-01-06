@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericFFBDriver", "Generic
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DriverInstaller-x86", "DriverInstaller\DriverInstaller.vdproj", "{C408790E-C9A8-4E4E-866F-F29991472631}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DriverInstaller-x64", "DriverInstaller-x64\DriverInstaller-x64.vdproj", "{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,16 +45,6 @@ Global
 		{C408790E-C9A8-4E4E-866F-F29991472631}.ReleaseSetup|x64.ActiveCfg = Release
 		{C408790E-C9A8-4E4E-866F-F29991472631}.ReleaseSetup|x64.Build.0 = Release
 		{C408790E-C9A8-4E4E-866F-F29991472631}.ReleaseSetup|x86.ActiveCfg = Release
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Debug|Any CPU.ActiveCfg = Debug
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Debug|x64.ActiveCfg = Debug
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Debug|x86.ActiveCfg = Debug
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Release|Any CPU.ActiveCfg = Release
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Release|x64.ActiveCfg = Release
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.Release|x86.ActiveCfg = Release
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.ReleaseSetup|Any CPU.ActiveCfg = Release
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.ReleaseSetup|x64.ActiveCfg = Release
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.ReleaseSetup|x64.Build.0 = Release
-		{7E5C5724-8FFB-47FF-B1CC-6D29BD624D0A}.ReleaseSetup|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
