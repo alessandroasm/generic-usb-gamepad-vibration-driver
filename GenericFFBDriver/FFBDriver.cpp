@@ -4,7 +4,7 @@
 #include <fstream>
 
 void LogMessage(const char* msg) {
-
+#ifdef _DEBUG
 	SYSTEMTIME st;
 	GetSystemTime(&st);
 	char buffer[256];
@@ -20,6 +20,7 @@ void LogMessage(const char* msg) {
 	outfile.open("J:\\Gamepad\\driverlog.txt", std::ios_base::app);
 	outfile << buffer;
 	outfile.close();
+#endif
 }
 
 FFBDriver::FFBDriver()
@@ -28,6 +29,7 @@ FFBDriver::FFBDriver()
 
 FFBDriver::~FFBDriver()
 {
+	vibration::VibrationController::Reset();
 }
 
 
@@ -66,7 +68,9 @@ HRESULT STDMETHODCALLTYPE FFBDriver::DeviceID(
 }
 
 HRESULT STDMETHODCALLTYPE FFBDriver::GetVersions(LPDIDRIVERVERSIONS lpVersions) {
+#ifdef _DEBUG
 	LogMessage("GetVersions\n");
+#endif
 
 	lpVersions->dwFFDriverVersion = 0x100;
 	lpVersions->dwFirmwareRevision = 0x100;
@@ -75,7 +79,9 @@ HRESULT STDMETHODCALLTYPE FFBDriver::GetVersions(LPDIDRIVERVERSIONS lpVersions) 
 	return S_OK;
 }
 HRESULT STDMETHODCALLTYPE FFBDriver::Escape(THIS_ DWORD, DWORD, LPDIEFFESCAPE) {
+#ifdef _DEBUG
 	LogMessage("Escape!\n");
+#endif
 	return S_OK;
 }
 HRESULT STDMETHODCALLTYPE FFBDriver::SetGain(
@@ -131,7 +137,9 @@ HRESULT STDMETHODCALLTYPE FFBDriver::SendForceFeedbackCommand(
 }
 
 HRESULT STDMETHODCALLTYPE FFBDriver::GetForceFeedbackState(THIS_ DWORD, LPDIDEVICESTATE) {
+#ifdef _DEBUG
 	LogMessage("GetForceFeedbackState!\n");
+#endif
 	return S_OK;
 }
 
@@ -155,18 +163,26 @@ HRESULT STDMETHODCALLTYPE FFBDriver::DownloadEffect(
 }
 
 HRESULT STDMETHODCALLTYPE FFBDriver::DestroyEffect(DWORD, DWORD) {
+#ifdef _DEBUG
 	LogMessage("DestroyEffect!\n");
+#endif
 	return S_OK;
 }
 HRESULT STDMETHODCALLTYPE FFBDriver::StartEffect(DWORD, DWORD, DWORD, DWORD) {
+#ifdef _DEBUG
 	LogMessage("StartEffect!\n");
+#endif
 	return S_OK;
 }
 HRESULT STDMETHODCALLTYPE FFBDriver::StopEffect(DWORD dwID, DWORD dwEffect) {
+#ifdef _DEBUG
 	LogMessage("StopEffect!\n");
+#endif
 	return S_OK;
 }
 HRESULT STDMETHODCALLTYPE FFBDriver::GetEffectStatus(DWORD, DWORD, LPDWORD) {
+#ifdef _DEBUG
 	LogMessage("GetEffectStatus!\n");
+#endif
 	return S_OK;
 }

@@ -63,8 +63,10 @@ namespace vibration {
 		if (thrVibration == NULL) {
 			quitVibrationThread = false;
 
-			for (int k = 0; k < MAX_EFFECTS; k++)
+			for (int k = 0; k < MAX_EFFECTS; k++) {
 				VibEffects[k].isActive = FALSE;
+				VibEffects[k].dwEffectId = -1;
+			}
 
 			thrVibration.reset(new std::thread(VibrationController::VibrationThreadEntryPoint));
 		}
@@ -171,47 +173,93 @@ namespace vibration {
 	void VibrationController::StartEffect(DWORD dwEffectID, LPCDIEFFECT peff)
 	{
 		mtxSync.lock();
+
+		int idx = -1;
+		// Reusing the same idx if effect was already created
 		for (int k = 0; k < MAX_EFFECTS; k++) {
-			if (VibEffects[k].isActive && k < MAX_EFFECTS - 1)
-				continue;
+			if (VibEffects[k].dwEffectId == dwEffectID) {
+				idx = k;
+				break;
+			}
+		}
 
-			// Calculating intensity
-			byte forceX = 0xfe;
-			byte forceY = 0xfe;
+		// Find a non-active idx
+		if (idx < 0) {
+			for (int k = 0; k < MAX_EFFECTS; k++) {
+				if (!VibEffects[k].isActive || k == MAX_EFFECTS - 1) {
+					idx = k;
+					break;
+				}
+			}
+		}
 
+		// Calculating intensity
+		byte forceX = 0xfe;
+		byte forceY = 0xfe;
+
+		byte magnitude = 0xfe;
+		if (peff->cbTypeSpecificParams == 4) {
+			LPDICONSTANTFORCE effParams = (LPDICONSTANTFORCE)peff->lpvTypeSpecificParams;
+			magnitude = (byte)(round((((double)effParams->lMagnitude) / 10000.0) * 254.0));
+		}
+
+		if (peff->cAxes == 1) {
+			// If direction is negative, then it is a forceX
+			// Otherwise it is a forceY
+			LONG direction = peff->rglDirection[0];
+			static byte lastForceX = 0;
+			static byte lastForceY = 0;
+
+			forceX = lastForceX;
+			forceY = lastForceY;
+
+			if (direction == -1) {
+				//forceX = lastForceX = (byte)(round((((double)peff->dwGain) / 10000.0) * 254.0));
+				forceX = lastForceX = magnitude;
+			}
+			else if (direction == 1) {
+				//forceY = lastForceY = (byte)(round((((double)peff->dwGain) / 10000.0) * 254.0));
+				forceY = lastForceY = magnitude;
+			}
+
+		}
+		else {
 			if (peff->cAxes >= 1) {
 				LONG fx = peff->rglDirection[0];
-				if (fx <= 1) fx = peff->dwGain;
+				//if (fx <= 1) fx = peff->dwGain;
 
-				forceX = forceY = (byte)abs(round((((double)fx) / 10000.0) * 254.0));
+				if (fx > 0)
+					forceX = forceY = magnitude;
+				else
+					forceX = forceY = 0;
 			}
 
 			if (peff->cAxes >= 2) {
 				LONG fy = peff->rglDirection[1];
-				if (fy <= 1) fy = peff->dwGain;
+				//if (fy <= 1) fy = peff->dwGain;
 
-				forceY = (byte)abs(round((((double)fy) / 10000.0) * 254.0));
+				if (fy > 0)
+					forceY = magnitude;
+				else
+					forceY = 0;
 			}
-
-
-			DWORD frame = GetTickCount();
-
-			VibEffects[k].forceX = forceX;
-			VibEffects[k].forceY = forceY;
-
-			VibEffects[k].dwEffectId = dwEffectID;
-			VibEffects[k].dwStartFrame = frame + (peff->dwStartDelay / 1000);
-			VibEffects[k].dwStopFrame = 
-				peff->dwDuration == INFINITE ? INFINITE : 
-				VibEffects[k].dwStartFrame + (peff->dwDuration / 1000);
-			VibEffects[k].isActive = TRUE;
-			VibEffects[k].started = FALSE;
-
-			break;
 		}
 
-		mtxSync.unlock();
 
+		DWORD frame = GetTickCount();
+
+		VibEffects[idx].forceX = forceX;
+		VibEffects[idx].forceY = forceY;
+
+		VibEffects[idx].dwEffectId = dwEffectID;
+		VibEffects[idx].dwStartFrame = frame + (peff->dwStartDelay / 1000);
+		VibEffects[idx].dwStopFrame = 
+			peff->dwDuration == INFINITE ? INFINITE : 
+			VibEffects[idx].dwStartFrame + (peff->dwDuration / 1000);
+		VibEffects[idx].isActive = TRUE;
+		VibEffects[idx].started = FALSE;
+
+		mtxSync.unlock();
 		StartVibrationThread();
 	}
 
