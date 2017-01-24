@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <Hidsdi.h>
 
+#define DISABLE_INFINITE_VIBRATION
+
 #define MAX_EFFECTS 5
 #define MAXC(a, b) ((a) > (b) ? (a) : (b))
 
@@ -130,9 +132,21 @@ namespace vibration {
 						VibEffects[k].started = TRUE;
 						
 						if (VibEffects[k].dwStopFrame != INFINITE) {
-							DWORD dt = VibEffects[k].dwStopFrame - VibEffects[k].dwStartFrame;
+							DWORD frmStart = VibEffects[k].dwStartFrame;
+							DWORD frmStop = VibEffects[k].dwStopFrame;
+
+							DWORD dt = frmStart <= frmStop ? frmStop - frmStart : frmStart + 100;
+							//if (dt > 750)
+							//	dt = 750;
+
 							VibEffects[k].dwStopFrame = frame + dt;
 						}
+#ifdef DISABLE_INFINITE_VIBRATION
+						else {
+							VibEffects[k].dwStopFrame = frame + 1000;
+						}
+#endif
+
 
 						forceX = MAXC(forceX, VibEffects[k].forceX);
 						forceY = MAXC(forceY, VibEffects[k].forceY);
@@ -200,7 +214,9 @@ namespace vibration {
 		byte magnitude = 0xfe;
 		if (peff->cbTypeSpecificParams == 4) {
 			LPDICONSTANTFORCE effParams = (LPDICONSTANTFORCE)peff->lpvTypeSpecificParams;
-			magnitude = (byte)(round((((double)effParams->lMagnitude) / 10000.0) * 254.0));
+			double mag = (((double)effParams->lMagnitude) + 10000.0) / 20000.0;
+
+			magnitude = (byte)(round(mag * 254.0));
 		}
 
 		if (peff->cAxes == 1) {
